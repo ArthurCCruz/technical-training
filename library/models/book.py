@@ -45,3 +45,9 @@ class LibraryBookUnique(models.Model):
     )
 
     default_code = fields.Char('Internal Reference')
+
+    def name_get(self):
+        return self.mapped(
+            lambda rec:
+                (rec.id, "[%s] %s" % (rec.default_code, rec.name))
+        )
