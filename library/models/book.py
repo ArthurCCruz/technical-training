@@ -12,6 +12,11 @@ class ProductProduct(models.Model):
 
     copy_ids = fields.One2many('library.copy', 'book_id', string="Book Copies")
 
+    loss_fee = fields.Monetary(
+        'Loss Fee',
+        currency_field='currency_id',
+    )
+
 
 class BookCopy(models.Model):
     _name = 'library.copy'

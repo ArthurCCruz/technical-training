@@ -12,6 +12,7 @@
                         <field name="publisher_id"/>
                         <field name="edition_date"/>
                         <field name="isbn"/>
+                        <field name="loss_fee"/>
                     </group>
                     <group string="Book Copies">
                         <div class="o_row">
