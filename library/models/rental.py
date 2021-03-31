@@ -32,7 +32,9 @@ class Rentals(models.Model):
             ('returned', 'Returned'),
             ('paid', 'Paid'),
         ],
-        string='State'
+        string='State',
+        default='open',
+        copy=False
     )
 
     currency_id = fields.Many2one(
@@ -50,6 +52,12 @@ class Rentals(models.Model):
     loss_fee = fields.Monetary(
         'Loss Fee',
         currency_field='currency_id',
+    )
+
+    total_price = fields.Monetary(
+        currency_field='currency_id',
+        compute='_compute_total_price',
+        store=True
     )
 
     @api.depends('customer_id')
@@ -71,6 +79,11 @@ class Rentals(models.Model):
     def _compute_rental_price(self):
         for record in self:
             record.rental_price = record.rental_length * record.book_id.lst_price
+
+    @api.depends('rental_price', 'loss_fee')
+    def _compute_total_price(self):
+        for record in self:
+            record.total_price = record.rental_price + record.loss_fee
 
     def button_apply_loss_fee(self):
         self._apply_loss_fee()

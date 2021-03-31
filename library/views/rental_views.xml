@@ -43,6 +43,7 @@
                             <field name="rental_length"/>
                             <field name="rental_price" widget="monetary"/>
                             <field name="loss_fee" widget="monetary"/>
+                            <field name="total_price" widget="monetary"/>
                             <field name="currency_id" invisible="1"/>
                         </group>                        
                         <group string="Partner">
