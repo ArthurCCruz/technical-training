@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="oa_class_view_list" model="ir.ui.view">
+        <field name="name">Class List</field>
+        <field name="model">oa.class</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+                <field name="level"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="oa_class_view_form" model="ir.ui.view">
+        <field name="name">Class Form</field>
+        <field name="model">oa.class</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name"/></h1>
+                        <field name="level"/>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="oa_class_view_action" model="ir.actions.act_window">
+        <field name="name">OA Class</field>
+        <field name="res_model">oa.class</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="oa_class_root"
+        name="Open Academy"
+        web_icon="openacademy,static/description/book.png"
+    />
+    <menuitem
+        id="oa_class_view_menu"
+        name="Classes"
+        parent="openacademy.oa_class_root"
+        action="oa_class_view_action"
+        sequence="1"
+    />
+</odoo>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="oa_session_view_list" model="ir.ui.view">
+        <field name="name">Sessions list</field>
+        <field name="model">oa.session</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="maester_id"/>
+                <field name="class_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="attendees_count"/>
+                <field name="room_size"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="oa_session_view_form" model="ir.ui.view">
+        <field name="name">Sessions Form</field>
+        <field name="model">oa.session</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="class_id"/>
+                            <field name="maester_id"/>
+                        </group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <label for="attendees_count"/>
+                            <div class="o_row">
+                                <field name="attendees_count"/>
+                                /
+                                <label for="room_size" class="oe_edit_only"/>
+                                <field name="room_size"/>
+                            </div>
+                        </group>
+                    </group>
+                    <field name="attendees_ids"/>
+                    <field name="state"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="oa_session_view_action" model="ir.actions.act_window">
+        <field name="name">OA Session</field>
+        <field name="res_model">oa.session</field>
+    </record>
+
+    <menuitem
+        id="oa_session_view_menu"
+        name="Sessions"
+        parent="openacademy.oa_class_root"
+        action="oa_session_view_action"
+        sequence="2"
+    />
+</odoo>
