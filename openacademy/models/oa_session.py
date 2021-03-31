@@ -28,8 +28,9 @@ class OASession(models.Model):
     )
     state = fields.Selection(
         selection=[
-            ('preparation', 'Preparation'),
-            ('ready', 'Ready')
+            ('draft', 'Preparation'),
+            ('ready', 'Ready'),
+            ('confirmed', 'Confirmed')
         ],
         string='State'
     )
@@ -54,9 +55,17 @@ class OASession(models.Model):
     @api.depends('attendees_ids', 'room_size')
     def _compute_attendees_count(self):
         for record in self:
-            record.attendees_count = len(record.attendees_ids)
-            if record.room_size:
-                record.room_percentage = len(record.attendees_ids) / record.room_size
+            attendees_count = len(record.attendees_ids)
+            room_size = record.room_size
+            if room_size:
+                room_percentage = (attendees_count / room_size) * 100
+            else:
+                room_percentage = 0
+            record.attendees_count = attendees_count
+            record.room_percentage = room_percentage
+            if room_percentage >= 50:
+                record.state = 'confirmed'
+                
 
     @api.constrains('attendees_count')
     def validate_attendees_count(self):
