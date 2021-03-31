@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models
-
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 class Rentals(models.Model):
     _name = 'library.rental'
@@ -12,6 +12,11 @@ class Rentals(models.Model):
 
     rental_date = fields.Date(default=fields.Date.context_today)
     return_date = fields.Date()
+    rental_length = fields.Integer(
+        'Rental Length (in days)',
+        compute='_compute_rental_length',
+        store=True
+    )
 
     customer_address = fields.Text(compute='_compute_customer_address')
     customer_email = fields.Char(related='customer_id.email')
@@ -20,6 +25,43 @@ class Rentals(models.Model):
     book_edition_date = fields.Date(related='copy_id.edition_date')
     book_publisher = fields.Many2one(related='copy_id.publisher_id')
 
+    state = fields.Selection(
+        selection=[
+            ('open', 'Open'),
+            ('late', 'Late'),
+            ('returned', 'Returned')
+        ],
+        string='State'
+    )
+
+    currency_id = fields.Many2one(
+        'res.currency', 'Currency',
+        related='book_id.currency_id'
+    )
+
+    rental_price = fields.Monetary(
+        'Price for the rental',
+        currency_field='currency_id',
+        compute='_compute_rental_price',
+        store=True
+    )
+
     @api.depends('customer_id')
     def _compute_customer_address(self):
         self.customer_address = self.customer_id.address_get()
+
+    @api.depends('rental_date', 'return_date')
+    def _compute_rental_length(self):
+        for record in self:
+            if not (record.return_date and record.rental_date):
+                rental_length = 0
+            else:
+                rental_length = (record.return_date - record.rental_date).days
+            if rental_length < 0:
+                raise ValidationError(_('Return date can not be before the rental one.'))
+            record.rental_length = rental_length
+
+    @api.depends('rental_length', 'book_id')
+    def _compute_rental_price(self):
+        for record in self:
+            record.rental_price = record.rental_length * record.book_id.lst_price
