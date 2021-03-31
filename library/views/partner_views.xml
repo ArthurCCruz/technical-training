@@ -1,5 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="res_partner_view_form_inherit" model="ir.ui.view">
+        <field name="name">library.res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Library">
+                    <group>
+                        <field name="total_due"/>
+                        <field name="rental_ids" readonly="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="res_partner_view_search_inherit" model="ir.ui.view">
+        <field name="name">library.res.partner.search</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="total_due"/>
+            </field>
+        </field>
+    </record>
     <record id="partner_action" model="ir.actions.act_window">
         <field name="name">Partners</field>
         <field name="res_model">res.partner</field>
