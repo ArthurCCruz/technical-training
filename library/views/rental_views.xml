@@ -1,5 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="library_rental_view_list" model="ir.ui.view">
+        <field name="name">Rental List</field>
+        <field name="model">library.rental</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="state == 'late'">
+                <field name="customer_id"/>
+                <field name="customer_email"/>
+                <field name="copy_id"/>
+                <field name="book_id"/>
+                <field name="rental_date"/>
+                <field name="return_date"/>
+                <field name="rental_price"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="library_rental_view_form" model="ir.ui.view">
+        <field name="name">rental Form</field>
+        <field name="model">library.rental</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="Book">
+                            <field name="copy_id"/>
+                            <field name="book_id"/>
+                            <field name="book_authors" widget="many2many_tags"/>
+                            <field name="book_edition_date"/>
+                            <field name="book_publisher"/>
+                        </group>
+                        <group string="Rentail Data">
+                            <field name="state"/>
+                            <field name="rental_date"/>
+                            <field name="return_date"/>
+                            <field name="rental_length"/>
+                            <field name="rental_price" widget="monetary"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>                        
+                        <group string="Partner">
+                            <field name="customer_id"/>
+                            <field name="customer_address"/>
+                            <field name="customer_email"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
     <record id="rental_action" model="ir.actions.act_window">
         <field name="name">Rentals</field>
         <field name="res_model">library.rental</field>
