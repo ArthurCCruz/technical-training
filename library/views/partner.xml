@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="library_partner_view_search" model="ir.ui.view">
+        <field name="name">partner Search</field>
+        <field name="model">library.partner</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="email"/>
+                <filter name="is_author_filter" domain="[('is_author', '=', True)]" string="Is Author"/>
+                <filter name="is_customer_filter" domain="[('is_customer', '=', True)]" string="Is Customer"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="library_partner_view_list" model="ir.ui.view">
+        <field name="name">partner List</field>
+        <field name="model">library.partner</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="phone_number"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="library_partner_view_form" model="ir.ui.view">
+        <field name="name">partner Form</field>
+        <field name="model">library.partner</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="email"/>
+                        <field name="phone_number"/>
+                    </group>
+                    <notebook>
+                        <page string="Settings">
+                            <group>
+                                <field name="is_editor"/>
+                                <field name="is_author"/>
+                                <field name="is_customer"/>
+                            </group>
+                        </page>
+                        <page string="Rent Registry" invisible="[('is_customer', '=', False)]">
+                            <field name="is_editor"/>
+
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="library_partner_view_action" model="ir.actions.act_window">
+        <field name="name">partners</field>
+        <field name="res_model">library.partner</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

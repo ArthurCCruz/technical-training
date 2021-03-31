@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+        id="library_menu_root"
+        name="Library"
+        sequence="10"/>
+
+    <menuitem
+        id="library_book_menu"
+        name="Books"
+        action="library.library_book_view_action"
+        parent="library_menu_root"
+        sequence="1"/>
+    <menuitem
+        id="library_partner_menu"
+        name="Partners"
+        action="library.library_partner_view_action"
+        parent="library_menu_root"
+        sequence="2"/>
+    <menuitem
+        id="library_rent_menu"
+        name="Rentails"
+        action="library.library_rent_view_action"
+        parent="library_menu_root"
+        sequence="3"/>
+
+</odoo>

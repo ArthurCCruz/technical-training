@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="library_book_view_search" model="ir.ui.view">
+        <field name="name">Book Search</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="ISBN"/>
+                <field name="author_ids"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="library_book_view_list" model="ir.ui.view">
+        <field name="name">Book List</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="ISBN"/>
+                <field name="author_ids" widget="many2many_tags"/>
+                <field name="editor_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="library_book_view_form" model="ir.ui.view">
+        <field name="name">Book Form</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <field name="ISBN"/>
+                        <field name="author_ids" widget="many2many_tags"/>
+                        <field name="editor_id" domain="[('is_editor','=',True)]"/>
+                    </group>
+                    <notebook>
+                        <page string="Copies">
+                            <field name="copy_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="library_book_unique_view_form" model="ir.ui.view">
+        <field name="name">Book Unique Form</field>
+        <field name="model">library.book.unique</field>
+        <field name="inherit_id" ref="library.library_book_view_form"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <field name="isbn" position="before">
+                <field name="default_code"></field>
+            </field>
+        </field>
+    </record>
+
+    <record id="library_book_view_action" model="ir.actions.act_window">
+        <field name="name">Books</field>
+        <field name="res_model">library.book</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
