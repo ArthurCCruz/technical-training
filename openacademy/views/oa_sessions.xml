@@ -36,6 +36,7 @@
                                 /
                                 <label for="room_size" class="oe_edit_only"/>
                                 <field name="room_size"/>
+                                <field name="room_percentage" widget="progressbar"/>
                             </div>
                         </group>
                     </group>
