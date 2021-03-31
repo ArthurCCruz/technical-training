@@ -2,6 +2,7 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
+
 class Rentals(models.Model):
     _name = 'library.rental'
     _description = 'Book rental'
@@ -28,8 +29,8 @@ class Rentals(models.Model):
     state = fields.Selection(
         selection=[
             ('open', 'Open'),
-            ('late', 'Late'),
-            ('returned', 'Returned')
+            ('returned', 'Returned'),
+            ('paid', 'Paid'),
         ],
         string='State'
     )
@@ -44,6 +45,11 @@ class Rentals(models.Model):
         currency_field='currency_id',
         compute='_compute_rental_price',
         store=True
+    )
+
+    loss_fee = fields.Monetary(
+        'Loss Fee',
+        currency_field='currency_id',
     )
 
     @api.depends('customer_id')
@@ -65,3 +71,29 @@ class Rentals(models.Model):
     def _compute_rental_price(self):
         for record in self:
             record.rental_price = record.rental_length * record.book_id.lst_price
+
+    def button_apply_loss_fee(self):
+        self._apply_loss_fee()
+
+    def _apply_loss_fee(self):
+        for record in self:
+            record.write({
+                'loss_fee': record.book_id.loss_fee
+            })
+
+    def button_register_return(self):
+        self._register_return()
+    
+    def _register_return(self):
+        self.write({
+            'return_date': fields.Date.today(),
+            'state': 'returned'
+        })
+
+    def button_register_payment(self):
+        self._register_payment()
+    
+    def _register_payment(self):
+        self.write({
+            'state': 'paid'
+        })

@@ -22,6 +22,12 @@
         <field name="model">library.rental</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button name="button_register_return" type="object" string="Register Return" class="btn-primary" states="open"/>
+                    <button name="button_register_payment" type="object" string="Register Payment" class="btn-primary" states="open,returned"/>
+                    <button name="button_apply_loss_fee" type="object" string="Appy Loss Fee" states="open"/>
+                    <field name="state" widget="statusbar" statusbar_visible="open,returned,paid"/>
+                </header>
                 <sheet>
                     <group>
                         <group string="Book">
@@ -32,11 +38,11 @@
                             <field name="book_publisher"/>
                         </group>
                         <group string="Rentail Data">
-                            <field name="state"/>
                             <field name="rental_date"/>
                             <field name="return_date"/>
                             <field name="rental_length"/>
                             <field name="rental_price" widget="monetary"/>
+                            <field name="loss_fee" widget="monetary"/>
                             <field name="currency_id" invisible="1"/>
                         </group>                        
                         <group string="Partner">
