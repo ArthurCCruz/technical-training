@@ -24,6 +24,11 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
+            <sheet position="before">
+                <header>
+                    <button name="button_add_to_session" string="Add to Session" type="object"/>
+                </header>
+            </sheet>
             <notebook position="inside">
                 <page string="Sessions">
                     <group>

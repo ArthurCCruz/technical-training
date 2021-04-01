@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="partner_to_session_form" model="ir.ui.view">
+        <field name="name">partner.to.session.form</field>
+        <field name="model">partner.to.session.wiz</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="partner_id" readonly="1"/>
+                    <field name="course_id"/>
+                    <field name="session_id" attrs="{'invisible': [('course_id', '=', False)]}"/>
+                </group>
+                <footer>
+                    <button string="Submit" name="button_add_partner_to_session" type="object" class="btn-primary"/>
+                    <button string="cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
