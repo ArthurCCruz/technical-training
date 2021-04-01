@@ -6,7 +6,7 @@ class Rentals(models.Model):
     _name = 'library.rental'
     _description = 'Book rental'
 
-    customer_id = fields.Many2one('res.partner', string='Customer', domain=[('customer', '=', True)], required=True)
+    customer_id = fields.Many2one('res.partner', string='Customer', domain=[('is_customer', '=', True)], required=True)
     copy_id = fields.Many2one('library.copy', string="Book Copy", domain=[('book_state', '=', 'available')], required=True)
     book_id = fields.Many2one('product.product', string='Book', domain=[('is_book', '=', True)], related='copy_id.book_id', readonly=True)
 

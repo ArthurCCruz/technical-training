@@ -28,7 +28,7 @@
                 </header>
                 <sheet>
                     <group>
-                        <field name="customer_id"/>
+                        <field name="customer_id" context="{'default_is_customer': True}"/>
                         <field name="copy_id"/>
                         <field name="rental_date"/>
                         <field name="return_date"/>

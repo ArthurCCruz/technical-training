@@ -19,6 +19,11 @@
         <field name="arch" type="xml">
             <form string="Book">
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="button_show_rental_customers" type="object" class="oe_stat_button" icon="fa-users">
+                            <field name="customers_count" widget="statinfo" string="Cutomers"/>
+                        </button>
+                    </div>
                     <field name="image_1920" widget='image' class="oe_left oe_avatar"/>
                     <div class="oe_title oe_left">
                         <h1>
