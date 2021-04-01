@@ -36,6 +36,7 @@
         "data/cron.xml",
         "data/mail.xml",
         "data/library_data.xml",
+        "wizards/create_rental_wiz.xml",
     ],
     # only loaded in demonstration mode
     'demo':        [],
