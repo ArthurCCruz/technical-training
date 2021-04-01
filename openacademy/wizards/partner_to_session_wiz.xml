@@ -6,9 +6,8 @@
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <field name="partner_id" readonly="1"/>
-                    <field name="course_id"/>
-                    <field name="session_id" attrs="{'invisible': [('course_id', '=', False)]}"/>
+                    <field required="1" name="course_id"/>
+                    <field required="1" name="session_id" attrs="{'invisible': [('course_id', '=', False)]}"/>
                 </group>
                 <footer>
                     <button string="Submit" name="button_add_partner_to_session" type="object" class="btn-primary"/>

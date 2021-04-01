@@ -18,15 +18,3 @@ class Partner(models.Model):
                 if "Chain Level" in categ.name:
                     level.append(int(categ.name.split(' ')[-1]))
             partner.level = max(level) if level else 0
-
-    def button_add_to_session(self):
-        return {
-            'name': _('Add to session'),
-            'type': 'ir.actions.act_window',
-            'view_mode': 'form',
-            'res_model': 'partner.to.session.wiz',
-            'target': 'new',
-            'context': {
-                'default_partner_id': self.id
-            }
-        }

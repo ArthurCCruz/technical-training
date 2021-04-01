@@ -4,7 +4,7 @@ from odoo import models, fields, api
 class PartnerToSessionWiz(models.TransientModel):
     _name = 'partner.to.session.wiz'
 
-    partner_id = fields.Many2one('res.partner', 'Attendee')
+    partner_ids = fields.Many2many('res.partner')
     course_id = fields.Many2one('openacademy.course', 'Course')
     session_id = fields.Many2one('openacademy.session', 'Session')
 
@@ -14,12 +14,15 @@ class PartnerToSessionWiz(models.TransientModel):
             'domain': {
                 'session_id': [
                     ('course_id', '=', self.course_id.id),
-                    ('id', 'not in', self.partner_id.session_ids.ids)
                 ]
             }
         }
 
     def button_add_partner_to_session(self):
+        new_attendee_ids = [*dict.fromkeys(
+            self.session_id.attendee_ids.ids +
+            self.partner_ids.ids
+        )]
         self.session_id.write({
-            'attendee_ids': [(4, self.partner_id.id, 0)]
+            'attendee_ids': [(6, 0, new_attendee_ids)]
         })

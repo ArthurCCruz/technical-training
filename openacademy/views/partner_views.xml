@@ -24,11 +24,6 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <sheet position="before">
-                <header>
-                    <button name="button_add_to_session" string="Add to Session" type="object"/>
-                </header>
-            </sheet>
             <notebook position="inside">
                 <page string="Sessions">
                     <group>
@@ -76,5 +71,16 @@
         <field name="sequence" eval="20"/>
         <field name="view_id" ref="openacademy.partner_view_form"/>
         <field name="act_window_id" ref="openacademy.partner_action"/>
+    </record>
+
+    <record id="action_add_partners_to_session" model="ir.actions.act_window">
+        <field name="name">Add to Session</field>
+        <field name="res_model">partner.to.session.wiz</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{
+            'default_partner_ids': active_ids
+        }</field>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
     </record>
 </odoo>
