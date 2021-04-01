@@ -25,6 +25,21 @@ class Course(models.Model):
          "The course title must be unique"),
     ]
 
+    attendees_count = fields.Integer(compute="_compute_atendees_count", store=True)
+
+    @api.depends('session_ids.attendee_ids')
+    def _compute_atendees_count(self):
+        for record in self:
+            record.attendees_count = len(record.mapped('session_ids.attendee_ids'))
+
+    def button_show_attendees(self):
+        self.ensure_one()
+        action = self.env.ref('openacademy.partner_action').read()[0]
+        action['domain'] = [
+            ('id', 'in', self.mapped('session_ids.attendee_ids.id'))
+        ]
+        return action
+
     def copy(self, default=None):
         default = dict(default or {})
 
