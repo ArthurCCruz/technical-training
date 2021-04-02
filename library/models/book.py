@@ -26,6 +26,26 @@ class BookCopy(models.Model):
     book_state = fields.Selection([('available', 'Available'), ('rented', 'Rented'), ('lost', 'Lost')], default="available")
     readers_count = fields.Integer(compute="_compute_readers_count")
 
+    def name_get(self):
+        return self.mapped(
+            lambda rec:
+                (rec.id, '[%s] %s' % (rec.reference, rec.name))
+        )
+
+    @api.model
+    def name_search(self, name, args=None, operator='ilike', limit=100):
+        args = args or []
+        domain = []
+        if name:
+            domain = [
+                '|',
+                ('name', operator, name),
+                ('reference', operator, name),
+            ]
+
+        copy_ids = self.search(domain + args, limit=limit)
+        return copy_ids.name_get()
+
     def open_readers(self):
         self.ensure_one()
         reader_ids = self.rental_ids.mapped('customer_id')
