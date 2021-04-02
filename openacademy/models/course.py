@@ -26,6 +26,14 @@ class Course(models.Model):
          "The course title must be unique"),
     ]
 
+    
+    allow_responsable_change = fields.Boolean(compute="_compute_allow_responsable_change")
+
+    def _compute_allow_responsable_change(self):
+        for record in self:
+            record.allow_responsable_change = self.env.user.has_group('openacademy.group_oa_archmaester')
+
+
     def copy(self, default=None):
         default = dict(default or {})
 
