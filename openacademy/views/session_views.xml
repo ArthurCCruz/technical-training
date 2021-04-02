@@ -63,8 +63,8 @@
                             <field name="taken_seats" widget="progressbar"/>
                         </group>
                     </group>
-                    <label for="attendee_ids"/>
-                    <field name="attendee_ids"/>
+                    <label for="attendee_ids" groups="openacademy.group_oa_maesters"/>
+                    <field name="attendee_ids" groups="openacademy.group_oa_maesters"/>
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers"/>
