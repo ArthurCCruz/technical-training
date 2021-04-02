@@ -29,6 +29,7 @@
                     <group>
                         <field name="instructor"/>
                         <field name="level"/>
+                        <field name="session_wage"/>
                         <field name="session_ids"/>
                     </group>
                 </page>

@@ -7,6 +7,7 @@ class Partner(models.Model):
 
     instructor = fields.Boolean(default=False)
     session_ids = fields.Many2many('openacademy.session', string="Attended Sessions", readonly=True)
+    session_wage = fields.Float()
 
     level = fields.Integer(compute="_get_level", string="Level", store=True)
 

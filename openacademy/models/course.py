@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import timedelta
 
-from odoo import api, exceptions, fields, models
+from odoo import api, exceptions, fields, models, _
 
 
 class Course(models.Model):
@@ -92,6 +92,51 @@ class Session(models.Model):
     seats = fields.Integer()
     taken_seats = fields.Float(compute='_compute_taken_seats', store=True)
     percentage_per_day = fields.Integer("%", default=100)
+
+    is_paid = fields.Boolean(copy=False)
+
+    def button_create_invoice(self):
+        if not self.instructor_id:
+            raise exceptions.ValidationError(_('You need to inform an instructor'))
+        return self._action_invoice_session()
+
+    def _action_invoice_session(self):
+        instructor_invoice =\
+            self._find_invoice()\
+            or self._create_instructor_invoice()
+        
+        self._create_invoice_line(
+            instructor_invoice
+        )
+        self.write({'is_paid': True})
+
+    def _find_invoice(self):
+        return self.env['account.move'].search([
+            ('partner_id', '=', self.instructor_id.id),
+        ])
+
+    def _create_instructor_invoice(self):
+        return self.env['account.move'].create(
+            self._prepare_invoice_vals()
+        )
+
+    def _create_invoice_line(self, move_id):
+        move_id.write({
+            'invoice_line_ids': [(0, 0, self._prepare_invoice_line_vals())]
+        })
+
+    def _prepare_invoice_vals(self):
+        return {
+            'partner_id': self.instructor_id.id,
+            'type': 'in_invoice'
+        }
+
+    def _prepare_invoice_line_vals(self):
+        return {
+            'name': self.name,
+            'quantity': 1,
+            'price_unit': self.instructor_id.session_wage,
+        }
 
     def _warning(self, title, message):
         return {'warning': {
