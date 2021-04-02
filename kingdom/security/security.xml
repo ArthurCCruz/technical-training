@@ -1,0 +1,26 @@
+<odoo>
+    <record model="ir.module.category" id="kingdom_category">
+        <field name="name">Open Academy</field>
+    </record>
+    
+    <record id="group_citzens" model="res.groups">
+        <field name="name">Citzens</field>
+        <field name="category_id" ref="kingdom.kingdom_category"/>
+        <field name="implied_ids" eval="[(6,0,[ref('base.group_user')])]"/>
+    </record>
+    <record id="group_economy" model="res.groups">
+        <field name="name">Economy Advisor</field>
+        <field name="category_id" ref="kingdom.kingdom_category"/>
+        <field name="implied_ids" eval="[(6,0,[ref('group_citzens')])]"/>
+    </record>
+    <record id="group_army" model="res.groups">
+        <field name="name">Army Advisor</field>
+        <field name="category_id" ref="kingdom.kingdom_category"/>
+        <field name="implied_ids" eval="[(6,0,[ref('group_citzens')])]"/>
+    </record>
+    <record id="group_king" model="res.groups">
+        <field name="name">King</field>
+        <field name="category_id" ref="kingdom.kingdom_category"/>
+        <field name="implied_ids" eval="[(6,0,[ref('group_economy'),ref('group_army')])]"/>
+    </record>
+</odoo>

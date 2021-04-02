@@ -24,6 +24,7 @@
 
     # always loaded
     'data':        [
+        "security/security.xml",
         "security/ir.model.access.csv",
         'data/kindgdom_data.xml',
         'views/army_views.xml',
