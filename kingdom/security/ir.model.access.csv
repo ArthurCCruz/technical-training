@@ -1,1 +1,5 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+army_read,Army Manager,model_kingdom_army,group_king,1,1,1,1
+army_read,Army Advisor,model_kingdom_army,group_army,1,0,0,0
+city_read,City Manager,model_kingdom_city,group_king,1,1,1,1
+city_read,City Advisor,model_kingdom_city,group_economy,1,0,0,0
