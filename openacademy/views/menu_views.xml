@@ -32,15 +32,23 @@
     <menuitem
             id="configuration_menu"
             name="Configuration"
+            groups="openacademy.group_oa_maesters"
             parent="openacademy.root_menu"
             sequence="99"
     />
     <menuitem
             id="partner_menu_action"
+            name="Instructors"
+            parent="openacademy.root_menu"
+            sequence="30"
+            action="partner_action"
+    />
+    <menuitem
+            id="all_partner_menu_action"
             name="Contacts"
             parent="openacademy.configuration_menu"
             sequence="10"
-            action="partner_action"
+            action="all_partner_action"
     />
 
     <menuitem

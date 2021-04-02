@@ -51,6 +51,13 @@
         <field name="name">Contacts</field>
         <field name="res_model">res.partner</field>
         <field name="view_mode">tree,form</field>
+        <field name="domain">[('instructor', '=', 1)]</field>
+    </record>
+
+    <record id="all_partner_action" model="ir.actions.act_window">
+        <field name="name">Contacts</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
     </record>
 
     <record id="partner_category_action" model="ir.actions.act_window">
