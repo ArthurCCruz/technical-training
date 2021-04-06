@@ -1,0 +1,43 @@
+<odoo>
+    <report 
+        id="action_report_library_copy"
+        string="Copies Report"
+        model="library.copy" 
+        report_type="qweb-pdf"
+        file="library.report_library_copy" 
+        name="library.report_library_copy"
+    />
+
+    <template id="report_library_copy">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="copy">
+                <t t-call="web.external_layout">
+                    <center>
+                        <h2>
+                            Copies Report
+                        </h2>
+                    </center>
+                    <div class="page">
+                        <div>
+                            <b>Report date: </b>
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%m/%d/%Y %H:%M')"/>
+                        </div>
+
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Reference</th>
+                                <th>Book Name</th>
+                                <th>State</th>
+                            </tr>
+                            <tr t-foreach="docs" t-as="copy">
+                                <td><span t-field="copy.reference"/></td>
+                                <td><span t-field="copy.name"/></td>
+                                <td><span t-field="copy.book_state"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
