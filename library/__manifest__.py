@@ -27,6 +27,7 @@
     'data':        [
         "security/ir.model.access.csv",
         "report/copy.xml",
+        "report/rental.xml",
         "views/menus.xml",
         "views/author.xml",
         "views/books.xml",
