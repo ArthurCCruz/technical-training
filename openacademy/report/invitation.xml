@@ -9,9 +9,43 @@
         print_report_name="'Intivation to %s' % (object.name)"/>
 
     <template id="report_session_invitation">
-        <t t-call="web.html_container">
-            <t t-call="web.external_layout">
-                <span t-field="docs.name"/>        
+        <t t-foreach="docs" t-as="session">
+            <t t-foreach="session.attendee_ids" t-as="attendee">
+                <t t-call="web.html_container">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-4 offset-8">
+                                        <address t-esc="attendee" t-options="{'widget': 'contact'}"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <h2><span t-field="session.name"/></h2>
+                                </div>
+                                <div class="row">
+                                    <p>
+                                        Hello, <span t-field="attendee.name"/>, we would like to invite you
+                                        for our next session, which will take place from
+                                        <span t-field="session.start_date"/> to <span t-field="session.end_date"/>.
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <b>Instructor: </b> <span t-field="session.instructor_id"/>
+                                </div>
+                                <div class="row">
+                                    <b>Course: </b> <span t-field="session.course_id"/>
+                                </div>
+                                <div class="row">
+                                        <p><b>Identification Barcode</b></p>
+                                </div>
+                                <div class="row">
+                                    <img t-att-src="'/report/barcode/Code128/%s' % attendee.id"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
             </t>
         </t>
     </template>
