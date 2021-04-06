@@ -1,0 +1,73 @@
+<odoo>
+    <template id="books_list">
+        <t t-call="website.layout">
+            <h1>Books List</h1>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Name</th>
+                    <th>Authors</th>
+                    <th>Available Copies</th>
+                    <th>Number of Copies</th>
+                </tr>
+                <tr t-foreach="books" t-as="book">
+                    
+                    <td><a t-attf-href="/books/{{ book.id }}"><span t-field="book.name"></span></a></td>
+                    <td><span t-field="book.author_ids"></span></td>
+                    <td><div class="text-right" t-esc="len(book.copy_ids.filtered(lambda c: c.book_state == 'available'))"></div></td>
+                    <td><div class="text-right" t-esc="len(book.copy_ids)"></div></td>
+                    
+                </tr>
+            </table>
+        </t>
+    </template>
+
+    <template id="copies_table">
+        <table class="table table-bordered">
+            <tr>
+                <th>Reference</th>
+                <th>Status</th>
+            </tr>
+            <tr t-foreach="copies" t-as="copy">
+                <td><span t-field="copy.reference"/></td>
+                <td>
+                    <span t-field="copy.book_state"/>
+                    <button t-if="copy.book_state == 'available'" class="btn-primary">Rent Now</button>
+                </td>
+            </tr>
+        </table>
+    </template>
+
+    <template id="book_view">
+        <t t-call="website.layout">
+            <h1 t-field="book.name"/>
+            <div class="container">
+                <div class="row">
+                    <p>
+                        <b>Authors: </b>
+                    </p>
+                    <ul>
+                        <li t-foreach="book.author_ids" t-as="author">
+                            <span t-field="author.name"/>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <p><b>Publisher: </b><span t-field="book.publisher_id"/></p>
+                </div>
+                <div class="row">
+                    <p><b>Edition Date: </b><span t-field="book.edition_date"/></p>
+                </div>
+                <div class="row">
+                    <p><b>ISBN: </b><span t-field="book.isbn"/></p>
+                </div>
+                <div class="row">
+                    <p><b>Copies: </b></p>
+                    <t t-call="library.copies_table">
+                        <t t-set="copies" t-value="book.copy_ids"/>
+                    </t>
+                </div>
+                
+            </div>
+        </t>
+    </template>
+</odoo>
