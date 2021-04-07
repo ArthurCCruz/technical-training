@@ -20,7 +20,7 @@
     'version':     '0.10',
 
     # any module necessary for this one to work correctly
-    'depends':     ['base', 'mail', 'product', 'account'],
+    'depends':     ['base', 'mail', 'product', 'account', 'website'],
 
     # always loaded
     'data':        [
@@ -30,6 +30,7 @@
         "views/session_views.xml",
         "views/partner_views.xml",
         "views/menu_views.xml",
+        "views/templates.xml",
         "wizard/add_attendee_views.xml",
         "report/session.xml",
         "data/openacademy_data.xml",
