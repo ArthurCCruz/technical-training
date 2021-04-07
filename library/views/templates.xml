@@ -22,6 +22,7 @@
     </template>
 
     <template id="copies_table">
+        <t t-set="logged_user" t-value="not request.env.user == website.user_id"/>
         <table class="table table-bordered">
             <tr>
                 <th>Reference</th>
@@ -31,7 +32,15 @@
                 <td><span t-field="copy.reference"/></td>
                 <td>
                     <span t-field="copy.book_state"/>
-                    <button t-if="copy.book_state == 'available'" class="btn-primary">Rent Now</button>
+                    <a 
+                        t-if="logged_user and copy.book_state =='available'"
+                        class="btn btn-primary"
+                        role="button"
+                        t-attf-href="/rental?copy_id={{ copy.id }}"
+                    >
+                        Rent Now
+                    </a>
+                    <span t-if="not logged_user and copy.book_state =='available'">- Sign In to Rent</span>
                 </td>
             </tr>
         </table>
@@ -67,6 +76,48 @@
                     </t>
                 </div>
                 
+            </div>
+        </t>
+    </template>
+
+    <template id="create_rental_view">
+        <t t-call="website.layout">
+            <div class="container">
+                <form action="/rental" method="post" class="col-8 offset-2">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <input type="hidden" name="copy_id" t-att-value="copy.id"/>
+                    <div class="form-group">
+                        <label for="book_title">Book Title</label>
+                        <p name="book_title" id="book_title" type="text" class="form-control" t-field="copy.name"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="reference">Copy Reference</label>
+                        <p name="reference" id="reference" type="text" class="form-control" t-field="copy.reference"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="return_date">Return Date</label>
+                        <input name="return_date" id="return_date" type="text" class="form-control" required="1"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        Rent Now
+                    </button>
+                </form>
+            </div>
+        </t>
+    </template>
+
+    <template id="successful_rental">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1>Success!</h1>
+                <p>Your rental has been confirmed. Please come get your book.</p>
+                <a 
+                    class="btn btn-primary"
+                    role="button"
+                    t-attf-href="/books"
+                >
+                    See Other Books
+                </a>
             </div>
         </t>
     </template>
