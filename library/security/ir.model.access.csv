@@ -4,4 +4,7 @@ publisher_manager,Publisher Manager,model_library_publisher,,1,1,1,1
 payment_manager,Payment Manager,model_library_payment,,1,1,1,1
 copy_manager,Copy Manager,model_library_copy,,1,1,1,1
 price_manager,Price Manager,model_library_price,,1,1,1,1
-partner_public,Partner Public,model_res_partner,,1,0,0,0
+product_template_public,Product Product Public,product.model_product_template,base.group_public,1,0,0,0
+product_template_portal,Product Product portal,product.model_product_template,base.group_portal,1,0,0,0
+product_product_public,Product Product Public,model_product_product,base.group_public,1,0,0,0
+product_product_portal,Product Product portal,model_product_product,base.group_portal,1,0,0,0
